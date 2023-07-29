@@ -12,10 +12,10 @@ public class KalmanFilter
     private Matrix<float> R; // Estimated error in measurement
 
     // Constructor: set initial values and matrices
-    public KalmanFilter(Matrix<float> F, Matrix<float> H, Matrix<float> x0, Matrix<float> P0, Matrix<float> Q, Matrix<float> R)
+    public KalmanFilter(Matrix<float> F, Matrix<float> B, Matrix<float> H, Matrix<float> x0, Matrix<float> P0, Matrix<float> Q, Matrix<float> R)
     {
         this.F = F;
-        this.B = Matrix<float>.Build.Dense(F.RowCount, F.ColumnCount); 
+        this.B = B; 
         this.H = H;
         this.x = x0;
         this.P = P0;
