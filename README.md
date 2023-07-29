@@ -19,13 +19,14 @@ using MathNet.Numerics.Distributions;
 // Initialize model parameters
 Matrix<float> F = ...; // State transition matrix
 Matrix<float> H = ...; // Observation matrix
+Matrix<float> B = ...; // Control matrix
 Matrix<float> x = ...; // Initial state estimate
 Matrix<float> P = ...; // Initial error covariance estimate
 Matrix<float> Q = ...; // Estimated error in process
 Matrix<float> R = ...; // Estimated error in measurements
 
 // Create an instance of the KalmanFilter class
-var kf = new KalmanFilter(F, H, x, P, Q, R);
+var kf = new KalmanFilter(F, H, B, x, P, Q, R);
 
 // Control vector
 Matrix<float> u = ...;
