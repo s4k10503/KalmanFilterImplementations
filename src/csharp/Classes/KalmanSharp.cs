@@ -12,7 +12,15 @@ public class KalmanFilter
     private Matrix<float> R; // Estimated error in measurement
 
     // Constructor: set initial values and matrices
-    public KalmanFilter(Matrix<float> F, Matrix<float> B, Matrix<float> H, Matrix<float> x0, Matrix<float> P0, Matrix<float> Q, Matrix<float> R)
+    public KalmanFilter(
+        Matrix<float> F,
+        Matrix<float> B,
+        Matrix<float> H,
+        Matrix<float> x0,
+        Matrix<float> P0,
+        Matrix<float> Q,
+        Matrix<float> R
+    )
     {
         this.F = F;
         this.B = B; 
@@ -21,6 +29,16 @@ public class KalmanFilter
         this.P = P0;
         this.Q = Q;
         this.R = R;
+    }
+
+    // Update the state transition matrix based on the time step dt.
+    public void UpdateStateTransitionMatrix(float dt)
+    {
+        int n = F.RowCount;
+        for (int i = 0; i < n / 2; i++)
+        {
+            F[i, i + n / 2] = dt;
+        }
     }
 
     // Predict step: update the state and error covariance
@@ -42,7 +60,8 @@ public class KalmanFilter
         // Calculate the threshold based on the chi-squared distribution
         float threshold = (float)ChiSquared.InvCDF(y.RowCount, 1 - outlierThreshold);
 
-        // If the Mahalanobis distance is greater than the threshold, consider the observation as an outlier and skip the update step
+        // If the Mahalanobis distance is greater than the threshold
+        // consider the observation as an outlier and skip the update step
         if (D > threshold)
         {
             return;
